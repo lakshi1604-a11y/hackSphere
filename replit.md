@@ -31,13 +31,18 @@ The server implements a RESTful API using Express.js with a modular route-based 
 **Business Logic**: Core hackathon functionality includes event timeline management, team formation with member management, submission handling with AI scoring integration, and real-time features like live announcements and leaderboards.
 
 ### Data Storage Solutions
-The application uses PostgreSQL as the primary database with Drizzle ORM for type-safe database interactions and schema management. The system supports both Neon Database and Azure Database for PostgreSQL with automatic detection and configuration.
+The application supports multiple database backends with automatic detection and configuration:
+
+**Database Options**:
+- **PostgreSQL**: Drizzle ORM with Neon Database and Azure Database support
+- **MongoDB**: Mongoose ODM with Azure Cosmos DB (MongoDB API) and MongoDB Atlas support
 
 **Database Schema**: Normalized relational design with separate tables for users, events, timelines, teams, team memberships, submissions, scores, and announcements. Foreign key relationships maintain referential integrity between related entities.
 
-**Connection Management**: Dual database support with automatic detection:
-- **Neon Database**: Serverless PostgreSQL with WebSocket support for real-time features
-- **Azure Database**: PostgreSQL with SSL configuration, optimized connection pooling, and enterprise-grade security
+**Connection Management**: Multi-database support with automatic detection:
+- **PostgreSQL Options**: Neon Database (serverless) and Azure Database (enterprise-grade)
+- **MongoDB Options**: Azure Cosmos DB (MongoDB API) and MongoDB Atlas
+- **Smart Detection**: Automatically configures the appropriate database driver based on connection string
 
 **Migration Strategy**: Drizzle Kit handles schema migrations with version control, storing migration files for deployment consistency across both database providers.
 
