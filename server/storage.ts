@@ -6,7 +6,7 @@ import {
   type Score, type InsertScore, type Announcement, type InsertAnnouncement
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and, sql } from "drizzle-orm";
+import { eq, desc, and, sql, count } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
@@ -57,6 +57,17 @@ export interface IStorage {
   // Announcement methods
   getAnnouncementsByEvent(eventId: string): Promise<(Announcement & { creator: User })[]>;
   createAnnouncement(announcement: InsertAnnouncement): Promise<Announcement>;
+
+  // Analytics methods
+  getEventAnalytics(eventId: string): Promise<{
+    participants: number;
+    teams: number;
+    submissions: number;
+    completion: number;
+  }>;
+  getOrganizerEvents(organizerId: string): Promise<Event[]>;
+  deleteEvent(eventId: string): Promise<boolean>;
+  updateEventStatus(eventId: string, isActive: boolean): Promise<Event | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -313,6 +324,62 @@ export class DatabaseStorage implements IStorage {
   async createAnnouncement(announcement: InsertAnnouncement): Promise<Announcement> {
     const [createdAnnouncement] = await db.insert(announcements).values(announcement).returning();
     return createdAnnouncement;
+  }
+
+  // Analytics methods
+  async getEventAnalytics(eventId: string): Promise<{
+    participants: number;
+    teams: number;
+    submissions: number;
+    completion: number;
+  }> {
+    const [participantCount] = await db.select({ count: count() })
+      .from(users)
+      .where(eq(users.role, "participant"));
+
+    const [teamCount] = await db.select({ count: count() })
+      .from(teams)
+      .where(eq(teams.eventId, eventId));
+
+    const [submissionCount] = await db.select({ count: count() })
+      .from(submissions)
+      .where(eq(submissions.eventId, eventId));
+
+    const [completedTimelines] = await db.select({ count: count() })
+      .from(timelines)
+      .where(and(eq(timelines.eventId, eventId), eq(timelines.status, "completed")));
+
+    const [totalTimelines] = await db.select({ count: count() })
+      .from(timelines)
+      .where(eq(timelines.eventId, eventId));
+
+    const completion = totalTimelines.count > 0 
+      ? Math.round((completedTimelines.count / totalTimelines.count) * 100)
+      : 0;
+
+    return {
+      participants: participantCount.count,
+      teams: teamCount.count,
+      submissions: submissionCount.count,
+      completion
+    };
+  }
+
+  async getOrganizerEvents(organizerId: string): Promise<Event[]> {
+    return await db.select().from(events).where(eq(events.createdBy, organizerId));
+  }
+
+  async deleteEvent(eventId: string): Promise<boolean> {
+    const result = await db.delete(events).where(eq(events.id, eventId));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async updateEventStatus(eventId: string, isActive: boolean): Promise<Event | undefined> {
+    const [updatedEvent] = await db.update(events)
+      .set({ isActive })
+      .where(eq(events.id, eventId))
+      .returning();
+    return updatedEvent || undefined;
   }
 
   // Helper method to calculate AI score

@@ -262,6 +262,51 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Analytics endpoints for organizers
+  app.get("/api/events/:eventId/analytics", requireRole(["organizer"]), async (req, res) => {
+    try {
+      const analytics = await storage.getEventAnalytics(req.params.eventId);
+      res.json(analytics);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch analytics" });
+    }
+  });
+
+  app.get("/api/organizers/:organizerId/events", requireRole(["organizer"]), async (req, res) => {
+    try {
+      const events = await storage.getOrganizerEvents(req.params.organizerId);
+      res.json(events);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch organizer events" });
+    }
+  });
+
+  app.delete("/api/events/:eventId", requireRole(["organizer"]), async (req, res) => {
+    try {
+      const deleted = await storage.deleteEvent(req.params.eventId);
+      if (deleted) {
+        res.status(204).send();
+      } else {
+        res.status(404).json({ message: "Event not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete event" });
+    }
+  });
+
+  app.patch("/api/events/:eventId/status", requireRole(["organizer"]), async (req, res) => {
+    try {
+      const { isActive } = req.body;
+      const event = await storage.updateEventStatus(req.params.eventId, isActive);
+      if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+      res.json(event);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update event status" });
+    }
+  });
+
   // Get available users for team matching (exclude current user and already teamed users)
   app.get("/api/events/:eventId/available-users", requireAuth, async (req, res) => {
     try {

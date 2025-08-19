@@ -57,10 +57,6 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
     queryKey: ["/api/events"],
   });
 
-  const { data: analytics } = useQuery({
-    queryKey: ["/api/events", activeEvent?.id, "analytics"],
-    enabled: !!activeEvent?.id,
-  });
 
   const createEventMutation = useMutation({
     mutationFn: async (data: typeof eventData) => {
@@ -167,12 +163,17 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
     });
   };
 
-  // Mock analytics data for now
-  const mockAnalytics = {
-    participants: 247,
-    teams: 89,
-    submissions: 34,
-    completion: 68
+  // Real analytics data
+  const { data: realAnalytics } = useQuery({
+    queryKey: ["/api/events", activeEvent?.id, "analytics"],
+    enabled: !!activeEvent?.id,
+  });
+
+  const analytics = realAnalytics || {
+    participants: 0,
+    teams: 0,
+    submissions: 0,
+    completion: 0
   };
 
   return (
@@ -559,19 +560,19 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-slate-800/80 rounded-xl text-center">
-                      <div className="text-2xl font-bold text-fuchsia-400">{mockAnalytics.participants}</div>
+                      <div className="text-2xl font-bold text-fuchsia-400">{analytics.participants}</div>
                       <div className="text-slate-400 text-sm">Participants</div>
                     </div>
                     <div className="p-3 bg-slate-800/80 rounded-xl text-center">
-                      <div className="text-2xl font-bold text-emerald-400">{mockAnalytics.teams}</div>
+                      <div className="text-2xl font-bold text-emerald-400">{analytics.teams}</div>
                       <div className="text-slate-400 text-sm">Teams</div>
                     </div>
                     <div className="p-3 bg-slate-800/80 rounded-xl text-center">
-                      <div className="text-2xl font-bold text-indigo-400">{mockAnalytics.submissions}</div>
+                      <div className="text-2xl font-bold text-indigo-400">{analytics.submissions}</div>
                       <div className="text-slate-400 text-sm">Submissions</div>
                     </div>
                     <div className="p-3 bg-slate-800/80 rounded-xl text-center">
-                      <div className="text-2xl font-bold text-yellow-400">{mockAnalytics.completion}%</div>
+                      <div className="text-2xl font-bold text-yellow-400">{analytics.completion}%</div>
                       <div className="text-slate-400 text-sm">Completion</div>
                     </div>
                   </div>
