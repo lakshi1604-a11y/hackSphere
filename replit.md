@@ -31,13 +31,15 @@ The server implements a RESTful API using Express.js with a modular route-based 
 **Business Logic**: Core hackathon functionality includes event timeline management, team formation with member management, submission handling with AI scoring integration, and real-time features like live announcements and leaderboards.
 
 ### Data Storage Solutions
-The application uses PostgreSQL as the primary database with Drizzle ORM for type-safe database interactions and schema management.
+The application uses PostgreSQL as the primary database with Drizzle ORM for type-safe database interactions and schema management. The system supports both Neon Database and Azure Database for PostgreSQL with automatic detection and configuration.
 
 **Database Schema**: Normalized relational design with separate tables for users, events, timelines, teams, team memberships, submissions, scores, and announcements. Foreign key relationships maintain referential integrity between related entities.
 
-**Connection Management**: Neon Database serverless PostgreSQL with connection pooling for scalable database access. WebSocket configuration enables real-time features.
+**Connection Management**: Dual database support with automatic detection:
+- **Neon Database**: Serverless PostgreSQL with WebSocket support for real-time features
+- **Azure Database**: PostgreSQL with SSL configuration, optimized connection pooling, and enterprise-grade security
 
-**Migration Strategy**: Drizzle Kit handles schema migrations with version control, storing migration files for deployment consistency.
+**Migration Strategy**: Drizzle Kit handles schema migrations with version control, storing migration files for deployment consistency across both database providers.
 
 ### Authentication and Authorization
 **Session-Based Authentication**: Express-session with PostgreSQL storage provides secure session management. Password security uses Node.js crypto module with scrypt hashing and random salt generation.
@@ -55,7 +57,9 @@ The application uses PostgreSQL as the primary database with Drizzle ORM for typ
 
 ### Database Services
 - **Neon Database**: Serverless PostgreSQL hosting with automatic scaling and built-in connection pooling
+- **Azure Database for PostgreSQL**: Enterprise-grade managed PostgreSQL with SSL encryption and high availability
 - **Drizzle ORM**: Type-safe database toolkit with schema management and query building
+- **Automatic Database Detection**: Smart configuration system that detects and configures the appropriate database driver
 
 ### UI and Styling
 - **Radix UI**: Unstyled, accessible UI primitives for complex components like dialogs, dropdowns, and form controls
