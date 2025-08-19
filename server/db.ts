@@ -33,7 +33,7 @@ if (isAzureDatabase) {
   // Neon Database configuration (existing setup)
   neonConfig.webSocketConstructor = ws;
   pool = new NeonPool({ connectionString: process.env.DATABASE_URL });
-  db = drizzleNeon(pool, { schema });
+  db = drizzleNeon(pool as NeonPool, { schema });
 }
 
 export { pool, db };
