@@ -39,7 +39,7 @@ export default function SubmissionsFeed({ eventId }: SubmissionsFeedProps) {
     enabled: !!eventId,
   });
 
-  const { data: userTeams = [] } = useQuery({
+  const { data: userTeams = [] } = useQuery<any[]>({
     queryKey: ["/api/users", user?.id, "teams"],
     enabled: !!user?.id,
   });

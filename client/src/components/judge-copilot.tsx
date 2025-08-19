@@ -85,7 +85,7 @@ export default function JudgeCopilot({ eventId }: JudgeCopilotProps) {
   };
 
   const getAIInsights = (submission: SubmissionWithDetails) => {
-    const score = submission.aiScore;
+    const score = submission.aiScore || 0;
     const insights = [];
 
     if (score >= 80) {
@@ -185,7 +185,7 @@ export default function JudgeCopilot({ eventId }: JudgeCopilotProps) {
                     Innovation Indicators
                   </span>
                   <Progress 
-                    value={Math.min(selectedSubmission.aiScore * 0.8, 100)} 
+                    value={Math.min((selectedSubmission.aiScore || 0) * 0.8, 100)} 
                     className="w-20 h-2"
                   />
                 </div>
@@ -196,7 +196,7 @@ export default function JudgeCopilot({ eventId }: JudgeCopilotProps) {
                     Technical Depth
                   </span>
                   <Progress 
-                    value={Math.min(selectedSubmission.aiScore * 1.1, 100)} 
+                    value={Math.min((selectedSubmission.aiScore || 0) * 1.1, 100)} 
                     className="w-20 h-2"
                   />
                 </div>
@@ -207,7 +207,7 @@ export default function JudgeCopilot({ eventId }: JudgeCopilotProps) {
                     Presentation Quality
                   </span>
                   <Progress 
-                    value={Math.min(selectedSubmission.aiScore * 0.9, 100)} 
+                    value={Math.min((selectedSubmission.aiScore || 0) * 0.9, 100)} 
                     className="w-20 h-2"
                   />
                 </div>

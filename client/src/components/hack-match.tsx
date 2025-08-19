@@ -30,7 +30,7 @@ export default function HackMatch({ eventId }: HackMatchProps) {
       skills: ["Python", "ML", "NLP"],
       role: "participant",
       password: "",
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     },
     {
       id: "user-3",
@@ -42,7 +42,7 @@ export default function HackMatch({ eventId }: HackMatchProps) {
       skills: ["Node", "SQL", "DevOps"],
       role: "participant",
       password: "",
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     },
     {
       id: "user-4",
@@ -54,7 +54,7 @@ export default function HackMatch({ eventId }: HackMatchProps) {
       skills: ["Figma", "3D", "Three.js"],
       role: "participant",
       password: "",
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     },
   ];
 
@@ -98,7 +98,7 @@ export default function HackMatch({ eventId }: HackMatchProps) {
     if (liked) {
       // In a real implementation, you'd match users based on mutual likes
       // For now, we'll create a team immediately
-      if (userTeams.length === 0) {
+      if ((userTeams as any[]).length === 0) {
         // Create new team if user doesn't have one
         await createTeamMutation.mutateAsync({
           name: `Team ${user?.name}`,
@@ -106,7 +106,7 @@ export default function HackMatch({ eventId }: HackMatchProps) {
         });
       } else {
         // Add to existing team
-        const team = userTeams[0]?.team;
+        const team = (userTeams as any[])[0]?.team;
         if (team) {
           await addMemberMutation.mutateAsync({
             teamId: team.id,
@@ -119,7 +119,7 @@ export default function HackMatch({ eventId }: HackMatchProps) {
     setCurrentIndex(prev => prev + 1);
   };
 
-  const currentTeam = userTeams[0]?.team;
+  const currentTeam = (userTeams as any[])[0]?.team;
 
   return (
     <section className="glassmorphism bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-xl">

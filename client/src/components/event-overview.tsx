@@ -8,8 +8,8 @@ interface EventOverviewProps {
 }
 
 export default function EventOverview({ event }: EventOverviewProps) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
+  const formatDate = (date: string | Date) => {
+    return new Date(date).toLocaleDateString();
   };
 
   return (

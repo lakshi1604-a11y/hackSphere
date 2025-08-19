@@ -14,7 +14,7 @@ import { Event } from "@shared/schema";
 
 export default function HomePage() {
   const { user } = useAuth();
-  const [selectedRole, setSelectedRole] = useState(user?.role || "participant");
+  const [selectedRole, setSelectedRole] = useState<"participant" | "organizer" | "judge">(user?.role || "participant");
   const [activeEventId, setActiveEventId] = useState<string | null>(null);
 
   const { data: events = [] } = useQuery<Event[]>({
@@ -38,7 +38,7 @@ export default function HomePage() {
       <div className="relative z-10 container mx-auto px-4 py-6 max-w-7xl">
         <NeonHeader 
           role={selectedRole} 
-          setRole={setSelectedRole}
+          setRole={(role: string) => setSelectedRole(role as "participant" | "organizer" | "judge")}
           user={user!}
         />
 

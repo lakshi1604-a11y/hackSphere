@@ -57,7 +57,7 @@ export function registerRoutes(app: Express): Server {
     try {
       const eventData = insertEventSchema.parse({
         ...req.body,
-        createdBy: req.user.id,
+        createdBy: req.user?.id,
       });
       const event = await storage.createEvent(eventData);
       res.status(201).json(event);
@@ -126,7 +126,7 @@ export function registerRoutes(app: Express): Server {
       const teamData = insertTeamSchema.parse({
         ...req.body,
         eventId: req.params.eventId,
-        leaderId: req.user.id,
+        leaderId: req.user?.id,
       });
       const team = await storage.createTeam(teamData);
       res.status(201).json(team);
@@ -151,7 +151,7 @@ export function registerRoutes(app: Express): Server {
     try {
       const memberData = insertTeamMemberSchema.parse({
         teamId: req.params.teamId,
-        userId: req.body.userId || req.user.id,
+        userId: req.body.userId || req.user?.id,
       });
       const member = await storage.addTeamMember(memberData);
       res.status(201).json(member);
@@ -187,7 +187,7 @@ export function registerRoutes(app: Express): Server {
       const submissionData = insertSubmissionSchema.parse({
         ...req.body,
         eventId: req.params.eventId,
-        submittedBy: req.user.id,
+        submittedBy: req.user?.id,
       });
       const submission = await storage.createSubmission(submissionData);
       res.status(201).json(submission);
@@ -214,7 +214,7 @@ export function registerRoutes(app: Express): Server {
       const scoreData = insertScoreSchema.parse({
         ...req.body,
         submissionId: req.params.submissionId,
-        judgeId: req.user.id,
+        judgeId: req.user?.id,
       });
       const score = await storage.createScore(scoreData);
       res.status(201).json(score);
@@ -250,7 +250,7 @@ export function registerRoutes(app: Express): Server {
       const announcementData = insertAnnouncementSchema.parse({
         ...req.body,
         eventId: req.params.eventId,
-        createdBy: req.user.id,
+        createdBy: req.user?.id,
       });
       const announcement = await storage.createAnnouncement(announcementData);
       res.status(201).json(announcement);

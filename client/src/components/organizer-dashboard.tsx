@@ -436,11 +436,11 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
                         {new Date(activeEvent.endDate).toLocaleString()}</span></p>
                     </div>
                     <div className="space-y-2">
-                      {activeEvent.tracks.length > 0 && (
+                      {(activeEvent.tracks || []).length > 0 && (
                         <div>
                           <span className="text-slate-400">Tracks:</span>
                           <div className="flex flex-wrap gap-1 mt-1">
-                            {activeEvent.tracks.map((track) => (
+                            {(activeEvent.tracks || []).map((track) => (
                               <Badge key={track} variant="secondary" className="text-xs">{track}</Badge>
                             ))}
                           </div>

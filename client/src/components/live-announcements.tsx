@@ -59,7 +59,7 @@ export default function LiveAnnouncements({ eventId }: LiveAnnouncementsProps) {
   const formatTimeAgo = (dateString: string) => {
     const now = new Date();
     const then = new Date(dateString);
-    const diffInMinutes = Math.floor((now.getTime() - then.getTime()) / (1000 * 60));
+    const diffInMinutes = Math.floor((now.getTime() - new Date(dateString).getTime()) / (1000 * 60));
     
     if (diffInMinutes < 1) return "Just now";
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
@@ -169,7 +169,7 @@ export default function LiveAnnouncements({ eventId }: LiveAnnouncementsProps) {
                     </Badge>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
-                      {formatTimeAgo(announcement.createdAt)}
+                      {formatTimeAgo(announcement.createdAt.toString())}
                     </span>
                   </div>
                 </div>

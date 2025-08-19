@@ -14,7 +14,7 @@ import { pool } from "./db";
 const PostgresSessionStore = connectPg(session);
 
 export interface IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: session.Store;
   
   // User methods
   getUser(id: string): Promise<User | undefined>;
@@ -60,7 +60,7 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: session.Store;
 
   constructor() {
     this.sessionStore = new PostgresSessionStore({ pool, createTableIfMissing: true });
@@ -83,12 +83,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values(insertUser).returning();
+    const userData = {
+      ...insertUser,
+      skills: insertUser.skills || []
+    };
+    const [user] = await db.insert(users).values([userData]).returning();
     return user;
   }
 
-  async updateUser(id: string, user: Partial<InsertUser>): Promise<User | undefined> {
-    const [updatedUser] = await db.update(users).set(user).where(eq(users.id, id)).returning();
+  async updateUser(id: string, userUpdate: Partial<InsertUser>): Promise<User | undefined> {
+    const updateData = { ...userUpdate };
+    if (updateData.skills) {
+      updateData.skills = Array.isArray(updateData.skills) ? updateData.skills : [];
+    }
+    const [updatedUser] = await db.update(users).set(updateData).where(eq(users.id, id)).returning();
     return updatedUser || undefined;
   }
 
@@ -103,12 +111,32 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createEvent(event: InsertEvent): Promise<Event> {
-    const [createdEvent] = await db.insert(events).values(event).returning();
+    const eventData = {
+      ...event,
+      tracks: event.tracks || [],
+      rules: event.rules || [],
+      prizes: event.prizes || [],
+      sponsors: event.sponsors || []
+    };
+    const [createdEvent] = await db.insert(events).values([eventData]).returning();
     return createdEvent;
   }
 
-  async updateEvent(id: string, event: Partial<InsertEvent>): Promise<Event | undefined> {
-    const [updatedEvent] = await db.update(events).set(event).where(eq(events.id, id)).returning();
+  async updateEvent(id: string, eventUpdate: Partial<InsertEvent>): Promise<Event | undefined> {
+    const updateData = { ...eventUpdate };
+    if (updateData.tracks) {
+      updateData.tracks = Array.isArray(updateData.tracks) ? updateData.tracks : [];
+    }
+    if (updateData.rules) {
+      updateData.rules = Array.isArray(updateData.rules) ? updateData.rules : [];
+    }
+    if (updateData.prizes) {
+      updateData.prizes = Array.isArray(updateData.prizes) ? updateData.prizes : [];
+    }
+    if (updateData.sponsors) {
+      updateData.sponsors = Array.isArray(updateData.sponsors) ? updateData.sponsors : [];
+    }
+    const [updatedEvent] = await db.update(events).set(updateData).where(eq(events.id, id)).returning();
     return updatedEvent || undefined;
   }
 
@@ -208,10 +236,12 @@ export class DatabaseStorage implements IStorage {
   async createSubmission(submission: InsertSubmission): Promise<Submission> {
     // Calculate AI score
     const aiScore = this.calculateAIScore(submission);
-    const [createdSubmission] = await db.insert(submissions).values({
+    const submissionData = {
       ...submission,
+      tags: submission.tags || [],
       aiScore,
-    }).returning();
+    };
+    const [createdSubmission] = await db.insert(submissions).values([submissionData]).returning();
     return createdSubmission;
   }
 
