@@ -12,24 +12,12 @@ export const connectMongoDB = async () => {
 
     // Connection options optimized for both Azure Cosmos DB and MongoDB Atlas
     const options = {
-      
       // Connection pool settings
       maxPoolSize: 10,
       minPoolSize: 2,
       maxIdleTimeMS: 30000,
       serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      
-      // Buffer settings
-      bufferMaxEntries: 0,
-      bufferCommands: false,
-      
-      // Azure Cosmos DB specific optimizations
-      retryWrites: true,
-      
-      // SSL settings for Azure
-      ssl: mongoUrl.includes('cosmos.azure.com') || mongoUrl.includes('mongodb.net'),
-      sslValidate: true
+      socketTimeoutMS: 45000
     };
 
     // Connect to MongoDB

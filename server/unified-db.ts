@@ -13,10 +13,17 @@ let storage: MongoStorage;
 
 export const initializeDatabase = async () => {
   if (isMongoDatabase) {
-    console.log('🍃 Initializing MongoDB connection...');
-    await connectMongoDB();
-    storage = new MongoStorage();
-    console.log('✅ MongoDB storage initialized');
+    console.log('🍃 Attempting MongoDB connection...');
+    try {
+      await connectMongoDB();
+      storage = new MongoStorage();
+      console.log('✅ MongoDB storage initialized');
+    } catch (error: any) {
+      console.error('❌ MongoDB connection failed, falling back to PostgreSQL:', error.message);
+      // Fallback to PostgreSQL
+      const { db } = await import('./db');
+      console.log('✅ PostgreSQL fallback ready');
+    }
   } else {
     console.log('🐘 Using PostgreSQL (existing setup)');
     // Keep existing PostgreSQL setup from db.ts
