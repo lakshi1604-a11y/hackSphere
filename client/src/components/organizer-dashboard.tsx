@@ -60,7 +60,13 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
 
   const createEventMutation = useMutation({
     mutationFn: async (data: typeof eventData) => {
-      const res = await apiRequest("POST", "/api/events", data);
+      // Convert date strings to Date objects for the backend
+      const payload = {
+        ...data,
+        startDate: new Date(data.startDate).toISOString(),
+        endDate: new Date(data.endDate).toISOString()
+      };
+      const res = await apiRequest("POST", "/api/events", payload);
       return res.json();
     },
     onSuccess: (newEvent: Event) => {
