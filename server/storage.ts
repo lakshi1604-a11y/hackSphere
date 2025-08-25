@@ -6,7 +6,7 @@ import {
   type Score, type InsertScore, type Announcement, type InsertAnnouncement
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and, sql, count } from "drizzle-orm";
+import { eq, desc, and, sql, count, ne, notInArray } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
@@ -65,6 +65,9 @@ export interface IStorage {
     submissions: number;
     completion: number;
   }>;
+  
+  // Available users for team matching
+  getAvailableUsers(eventId: string, excludeUserId: string): Promise<User[]>;
   getOrganizerEvents(organizerId: string): Promise<Event[]>;
   deleteEvent(eventId: string): Promise<boolean>;
   updateEventStatus(eventId: string, isActive: boolean): Promise<Event | undefined>;
@@ -369,6 +372,29 @@ export class DatabaseStorage implements IStorage {
 
   async getOrganizerEvents(organizerId: string): Promise<Event[]> {
     return await db.select().from(events).where(eq(events.createdBy, organizerId));
+  }
+
+  async getAvailableUsers(eventId: string, excludeUserId: string): Promise<User[]> {
+    // Get users who are participants and not already on a team for this event
+    const usersInTeams = await db.select({ userId: teamMembers.userId })
+      .from(teamMembers)
+      .innerJoin(teams, eq(teamMembers.teamId, teams.id))
+      .where(eq(teams.eventId, eventId));
+    
+    const userIdsInTeams = usersInTeams.map((u: { userId: string }) => u.userId);
+    
+    // Get all participant users not in teams and not the current user
+    const availableUsers = await db.select()
+      .from(users)
+      .where(
+        and(
+          eq(users.role, "participant"),
+          ne(users.id, excludeUserId),
+          userIdsInTeams.length > 0 ? notInArray(users.id, userIdsInTeams) : undefined
+        )
+      );
+    
+    return availableUsers;
   }
 
   async deleteEvent(eventId: string): Promise<boolean> {

@@ -315,11 +315,11 @@ export function registerRoutes(app: Express): Server {
   // Get available users for team matching (exclude current user and already teamed users)
   app.get("/api/events/:eventId/available-users", requireAuth, async (req, res) => {
     try {
-      // This would need more complex logic to exclude users already on teams
-      // For now, return all users except the current user
-      const users = await storage.getEvents(); // This needs to be implemented in storage
-      // Filter logic would go here
-      res.json([]);
+      const { eventId } = req.params;
+      const currentUserId = req.user.id;
+      
+      const availableUsers = await storage.getAvailableUsers(eventId, currentUserId);
+      res.json(availableUsers);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch available users" });
     }

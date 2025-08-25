@@ -18,48 +18,14 @@ export default function HackMatch({ eventId }: HackMatchProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [swipedUsers, setSwipedUsers] = useState<string[]>([]);
 
-  // Mock users for now - in real implementation, this would fetch available users
-  const mockUsers: User[] = [
-    {
-      id: "user-2",
-      username: "amrutha_ml",
-      name: "Amrutha",
-      email: "amrutha@example.com",
-      bio: "ML generalist who ships fast",
-      avatar: "🤖",
-      skills: ["Python", "ML", "NLP"],
-      role: "participant",
-      password: "",
-      createdAt: new Date(),
-    },
-    {
-      id: "user-3",
-      username: "himashi_dev",
-      name: "Himashi",
-      email: "himashi@example.com",
-      bio: "Loves scalable backends",
-      avatar: "🛠️",
-      skills: ["Node", "SQL", "DevOps"],
-      role: "participant",
-      password: "",
-      createdAt: new Date(),
-    },
-    {
-      id: "user-4",
-      username: "saumya_design",
-      name: "Saumya",
-      email: "saumya@example.com",
-      bio: "Design + 3D micro-interactions",
-      avatar: "🎨",
-      skills: ["Figma", "3D", "Three.js"],
-      role: "participant",
-      password: "",
-      createdAt: new Date(),
-    },
-  ];
+  // Fetch real available users from the API
+  const { data: availableUsersData = [] } = useQuery({
+    queryKey: ["/api/events", eventId, "available-users"],
+    enabled: !!user?.id && !!eventId,
+  });
 
-  const availableUsers = mockUsers.filter(u => 
-    u.id !== user?.id && !swipedUsers.includes(u.id)
+  const availableUsers = (availableUsersData as User[]).filter(u => 
+    !swipedUsers.includes(u.id)
   );
 
   const { data: userTeams = [] } = useQuery({

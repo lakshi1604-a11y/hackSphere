@@ -1,17 +1,39 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, uuid, timestamp, integer, boolean, json, pgEnum } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  varchar,
+  uuid,
+  timestamp,
+  integer,
+  boolean,
+  json,
+  pgEnum,
+} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Enums
-export const userRoleEnum = pgEnum("user_role", ["participant", "organizer", "judge"]);
-export const eventModeEnum = pgEnum("event_mode", ["online", "offline", "hybrid"]);
-export const timelineStatusEnum = pgEnum("timeline_status", ["pending", "active", "completed"]);
+export const userRoleEnum = pgEnum("user_role", [
+  "participant",
+  "organizer",
+  "judge",
+]);
+export const eventModeEnum = pgEnum("event_mode", [
+  "online",
+  "offline",
+  "hybrid",
+]);
+export const timelineStatusEnum = pgEnum("timeline_status", [
+  "pending",
+  "active",
+  "completed",
+]);
 
 // Users table
 export const users = pgTable("users", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   email: text("email").notNull().unique(),
@@ -25,7 +47,9 @@ export const users = pgTable("users", {
 
 // Events table
 export const events = pgTable("events", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
   theme: text("theme"),
   description: text("description"),
@@ -36,15 +60,21 @@ export const events = pgTable("events", {
   sponsors: json("sponsors").$type<string[]>().default([]),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
-  createdBy: uuid("created_by").notNull().references(() => users.id),
+  createdBy: uuid("created_by")
+    .notNull()
+    .references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   isActive: boolean("is_active").default(true),
 });
 
 // Timeline milestones
 export const timelines = pgTable("timelines", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
-  eventId: uuid("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  eventId: uuid("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   label: text("label").notNull(),
   description: text("description"),
   dueDate: timestamp("due_date").notNull(),
@@ -55,25 +85,39 @@ export const timelines = pgTable("timelines", {
 
 // Teams table
 export const teams = pgTable("teams", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
-  eventId: uuid("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
-  leaderId: uuid("leader_id").notNull().references(() => users.id),
+  eventId: uuid("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
+  leaderId: uuid("leader_id")
+    .notNull()
+    .references(() => users.id),
   maxMembers: integer("max_members").default(4),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Team members junction table
 export const teamMembers = pgTable("team_members", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
-  teamId: uuid("team_id").notNull().references(() => teams.id, { onDelete: "cascade" }),
-  userId: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  teamId: uuid("team_id")
+    .notNull()
+    .references(() => teams.id, { onDelete: "cascade" }),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   joinedAt: timestamp("joined_at").defaultNow().notNull(),
 });
 
 // Submissions table
 export const submissions = pgTable("submissions", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
   description: text("description").notNull(),
   githubUrl: text("github_url"),
@@ -81,17 +125,27 @@ export const submissions = pgTable("submissions", {
   track: text("track"),
   tags: json("tags").$type<string[]>().default([]),
   teamId: uuid("team_id").references(() => teams.id, { onDelete: "cascade" }),
-  eventId: uuid("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
-  submittedBy: uuid("submitted_by").notNull().references(() => users.id),
+  eventId: uuid("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
+  submittedBy: uuid("submitted_by")
+    .notNull()
+    .references(() => users.id),
   aiScore: integer("ai_score").default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Judge scores
 export const scores = pgTable("scores", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
-  submissionId: uuid("submission_id").notNull().references(() => submissions.id, { onDelete: "cascade" }),
-  judgeId: uuid("judge_id").notNull().references(() => users.id),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  submissionId: uuid("submission_id")
+    .notNull()
+    .references(() => submissions.id, { onDelete: "cascade" }),
+  judgeId: uuid("judge_id")
+    .notNull()
+    .references(() => users.id),
   innovation: integer("innovation").default(0),
   technical: integer("technical").default(0),
   design: integer("design").default(0),
@@ -104,10 +158,16 @@ export const scores = pgTable("scores", {
 
 // Announcements table
 export const announcements = pgTable("announcements", {
-  id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
-  eventId: uuid("event_id").notNull().references(() => events.id, { onDelete: "cascade" }),
+  id: uuid("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  eventId: uuid("event_id")
+    .notNull()
+    .references(() => events.id, { onDelete: "cascade" }),
   message: text("message").notNull(),
-  createdBy: uuid("created_by").notNull().references(() => users.id),
+  createdBy: uuid("created_by")
+    .notNull()
+    .references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
