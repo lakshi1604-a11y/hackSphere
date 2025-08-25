@@ -170,17 +170,17 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
   };
 
   // Real analytics data
-  const { data: realAnalytics } = useQuery({
-    queryKey: ["/api/events", activeEvent?.id, "analytics"],
-    enabled: !!activeEvent?.id,
-  });
-
-  const analytics: {
+  const { data: realAnalytics } = useQuery<{
     participants: number;
     teams: number;
     submissions: number;
     completion: number;
-  } = realAnalytics || {
+  }>({
+    queryKey: ["/api/events", activeEvent?.id, "analytics"],
+    enabled: !!activeEvent?.id,
+  });
+
+  const analytics = realAnalytics || {
     participants: 0,
     teams: 0,
     submissions: 0,

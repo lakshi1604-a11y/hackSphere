@@ -333,9 +333,11 @@ export class DatabaseStorage implements IStorage {
     submissions: number;
     completion: number;
   }> {
+    // Count participants who are actually in teams for this specific event
     const [participantCount] = await db.select({ count: count() })
-      .from(users)
-      .where(eq(users.role, "participant"));
+      .from(teamMembers)
+      .innerJoin(teams, eq(teamMembers.teamId, teams.id))
+      .where(eq(teams.eventId, eventId));
 
     const [teamCount] = await db.select({ count: count() })
       .from(teams)
