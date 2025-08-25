@@ -175,7 +175,12 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
     enabled: !!activeEvent?.id,
   });
 
-  const analytics = realAnalytics || {
+  const analytics: {
+    participants: number;
+    teams: number;
+    submissions: number;
+    completion: number;
+  } = realAnalytics || {
     participants: 0,
     teams: 0,
     submissions: 0,

@@ -55,8 +55,11 @@ export function registerRoutes(app: Express): Server {
 
   app.post("/api/events", requireRole(["organizer"]), async (req, res) => {
     try {
+      // Convert ISO date strings to Date objects for validation
       const eventData = insertEventSchema.parse({
         ...req.body,
+        startDate: req.body.startDate ? new Date(req.body.startDate) : undefined,
+        endDate: req.body.endDate ? new Date(req.body.endDate) : undefined,
         createdBy: req.user?.id,
       });
       const event = await storage.createEvent(eventData);
@@ -81,8 +84,10 @@ export function registerRoutes(app: Express): Server {
 
   app.post("/api/events/:eventId/timeline", requireRole(["organizer"]), async (req, res) => {
     try {
+      // Convert ISO date strings to Date objects for validation
       const timelineData = insertTimelineSchema.parse({
         ...req.body,
+        dueDate: req.body.dueDate ? new Date(req.body.dueDate) : undefined,
         eventId: req.params.eventId,
       });
       const timeline = await storage.createTimeline(timelineData);
