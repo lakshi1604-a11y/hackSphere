@@ -78,7 +78,7 @@ export default function TimelineMap({ eventId }: TimelineMapProps) {
           <div key={milestone.id} className="flex items-center min-w-0">
             <div className="flex flex-col items-center">
               <motion.div
-                whileHover={user?.role === "organizer" ? { scale: 1.05 } : {}}
+                whileHover={user?.role === "organizer" ? { scale: 1.05 } : undefined}
                 className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
                   statusClasses[milestone.status]
                 } ${

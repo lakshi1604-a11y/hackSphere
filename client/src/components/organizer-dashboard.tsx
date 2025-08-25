@@ -441,7 +441,7 @@ export default function OrganizerDashboard({ activeEvent, setActiveEvent }: Orga
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div className="space-y-2">
-                      <p><span className="text-slate-400">Mode:</span> <Badge className="ml-2">{activeEvent.mode}</Badge></p>
+                      <div className="flex items-center"><span className="text-slate-400">Mode:</span> <Badge className="ml-2">{activeEvent.mode}</Badge></div>
                       <p><span className="text-slate-400">Start:</span> <span className="text-slate-200 ml-2">
                         {new Date(activeEvent.startDate).toLocaleString()}</span></p>
                       <p><span className="text-slate-400">End:</span> <span className="text-slate-200 ml-2">

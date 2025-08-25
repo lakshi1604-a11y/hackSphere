@@ -299,7 +299,7 @@ export class DatabaseStorage implements IStorage {
       .groupBy(teams.id, teams.name)
       .orderBy(desc(sql`AVG(${scores.totalScore})`));
     
-    return result.map(r => ({
+    return result.map((r: any) => ({
       teamId: r.teamId,
       teamName: r.teamName,
       averageScore: r.averageScore || 0,

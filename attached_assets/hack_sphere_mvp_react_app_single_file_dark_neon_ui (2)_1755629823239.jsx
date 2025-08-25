@@ -38,12 +38,175 @@ const nowISO = () => new Date().toISOString();
 const seedIfEmpty = () => {
   const seeded = store.get("__seeded__", false);
   if (seeded) return;
-
   const users = [
-    { id: "u1", name: "Lakshmi", skills: ["React", "UI/UX", "Arduino"], bio: "Frontend wizard + IoT tinkerer", avatar: "🪄" },
-    { id: "u2", name: "Amrutha", skills: ["Python", "ML", "NLP"], bio: "ML generalist who ships fast", avatar: "🤖" },
-    { id: "u3", name: "Himashi", skills: ["Node", "SQL", "DevOps"], bio: "Loves scalable backends", avatar: "🛠️" },
-    { id: "u4", name: "Saumya", skills: ["Figma", "3D", "Three.js"], bio: "Design + 3D micro-interactions", avatar: "🎨" },
+    {
+      id: "u1",
+      name: "Lakshmi",
+      skills: ["React", "UI/UX", "Arduino"],
+      bio: "Frontend wizard + IoT tinkerer",
+      avatar: "🪄",
+    },
+    {
+      id: "u2",
+      name: "Amrutha",
+      skills: ["Python", "ML", "NLP"],
+      bio: "ML generalist who ships fast",
+      avatar: "🤖",
+    },
+    {
+      id: "u3",
+      name: "Himashi",
+      skills: ["Node", "SQL", "DevOps"],
+      bio: "Loves scalable backends",
+      avatar: "🛠️",
+    },
+    {
+      id: "u4",
+      name: "Janis",
+      skills: ["Figma", "3D", "Three.js"],
+      bio: "Design + 3D micro-interactions",
+      avatar: "🎨",
+    },
+    {
+      id: "u5",
+      name: "Arjun",
+      skills: ["Java", "Spring Boot", "APIs"],
+      bio: "Enterprise backend architect",
+      avatar: "☕",
+    },
+    {
+      id: "u6",
+      name: "Meera",
+      skills: ["Vue.js", "Tailwind", "Accessibility"],
+      bio: "Clean UI & inclusive design advocate",
+      avatar: "🌸",
+    },
+    {
+      id: "u7",
+      name: "Karthik",
+      skills: ["C++", "Rust", "Game Dev"],
+      bio: "Performance freak, builds engines from scratch",
+      avatar: "🎮",
+    },
+    {
+      id: "u8",
+      name: "Sofia",
+      skills: ["Data Science", "Pandas", "Visualization"],
+      bio: "Turns data into stories",
+      avatar: "📊",
+    },
+    {
+      id: "u9",
+      name: "Ravi",
+      skills: ["Go", "Microservices", "Kubernetes"],
+      bio: "Cloud-native systems thinker",
+      avatar: "☁️",
+    },
+    {
+      id: "u10",
+      name: "Ananya",
+      skills: ["Cybersecurity", "Ethical Hacking", "Networking"],
+      bio: "Breaks systems to secure them",
+      avatar: "🕵️‍♀️",
+    },
+    {
+      id: "u11",
+      name: "Leo",
+      skills: ["iOS", "SwiftUI", "ARKit"],
+      bio: "Builds future-ready mobile apps",
+      avatar: "📱",
+    },
+    {
+      id: "u12",
+      name: "Priya",
+      skills: ["Django", "REST", "Postgres"],
+      bio: "Fast backend prototyper",
+      avatar: "⚡",
+    },
+    {
+      id: "u13",
+      name: "Mikhail",
+      skills: ["Blockchain", "Solidity", "Web3"],
+      bio: "Crypto-enthusiast & smart contract dev",
+      avatar: "⛓️",
+    },
+    {
+      id: "u14",
+      name: "Sara",
+      skills: ["Content Strategy", "Marketing", "SEO"],
+      bio: "Bridges tech with storytelling",
+      avatar: "📢",
+    },
+    {
+      id: "u15",
+      name: "Omar",
+      skills: ["Unity", "C#", "VR/AR"],
+      bio: "Immersive experiences creator",
+      avatar: "🕶️",
+    },
+    {
+      id: "u16",
+      name: "Zara",
+      skills: ["R", "Statistics", "ML Ops"],
+      bio: "Research-driven, production-minded",
+      avatar: "📐",
+    },
+    {
+      id: "u17",
+      name: "Daniel",
+      skills: ["PHP", "Laravel", "MySQL"],
+      bio: "Old school fullstack, still shipping fast",
+      avatar: "🧑‍💻",
+    },
+    {
+      id: "u18",
+      name: "Fatima",
+      skills: ["Cloud", "AWS", "Terraform"],
+      bio: "Infra-as-code believer",
+      avatar: "🛡️",
+    },
+    {
+      id: "u19",
+      name: "Chen",
+      skills: ["Computer Vision", "Deep Learning", "PyTorch"],
+      bio: "Sees the world in pixels",
+      avatar: "👁️",
+    },
+    {
+      id: "u20",
+      name: "Isabella",
+      skills: ["Angular", "NgRx", "TypeScript"],
+      bio: "Loves structure & reactive apps",
+      avatar: "🌀",
+    },
+    {
+      id: "u21",
+      name: "David",
+      skills: ["Testing", "QA", "Automation"],
+      bio: "Catches bugs before you do",
+      avatar: "🔍",
+    },
+    {
+      id: "u22",
+      name: "Aisha",
+      skills: ["Product Management", "Agile", "Scrum"],
+      bio: "Keeps devs aligned with vision",
+      avatar: "📋",
+    },
+    {
+      id: "u23",
+      name: "Noah",
+      skills: ["Hardware", "Raspberry Pi", "C"],
+      bio: "Loves tinkering with boards",
+      avatar: "🔧",
+    },
+    {
+      id: "u24",
+      name: "Elena",
+      skills: ["Graphic Design", "Motion", "Branding"],
+      bio: "Makes everything beautiful",
+      avatar: "✨",
+    },
   ];
 
   const eventId = uid();
@@ -69,11 +232,23 @@ const seedIfEmpty = () => {
   ];
 
   const announcements = [
-    { id: uid(), eventId, msg: "Welcome to HackSphere! 🚀 Drop your first submission when ready.", by: "System", at: nowISO() },
+    {
+      id: uid(),
+      eventId,
+      msg: "Welcome to HackSphere! 🚀 Drop your first submission when ready.",
+      by: "System",
+      at: nowISO(),
+    },
   ];
 
   const teams = [
-    { id: uid(), eventId, name: "NeonBits", members: ["u1", "u3"], createdAt: nowISO() },
+    {
+      id: uid(),
+      eventId,
+      name: "NeonBits",
+      members: ["u1", "u3"],
+      createdAt: nowISO(),
+    },
   ];
 
   const submissions = [
@@ -112,7 +287,8 @@ const rubricKeywords = {
 
 function aiFirstImpression(sub) {
   // score 0..100 based on keyword overlap with description+tags+title
-  const text = `${sub.title} ${sub.desc} ${sub.tags?.join(" ") || ""}`.toLowerCase();
+  const text =
+    `${sub.title} ${sub.desc} ${sub.tags?.join(" ") || ""}`.toLowerCase();
   const buckets = Object.values(rubricKeywords).map((arr) => arr);
   let hits = 0;
   let total = 0;
@@ -132,7 +308,9 @@ function aiFirstImpression(sub) {
 const Section = ({ title, right, children }) => (
   <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 md:p-6 shadow-xl">
     <div className="flex items-center justify-between mb-3">
-      <h3 className="text-lg md:text-xl font-semibold text-slate-100 tracking-wide">{title}</h3>
+      <h3 className="text-lg md:text-xl font-semibold text-slate-100 tracking-wide">
+        {title}
+      </h3>
       {right}
     </div>
     {children}
@@ -159,10 +337,17 @@ const TextArea = (props) => (
   />
 );
 
-const Button = ({ children, onClick, variant = "primary", className = "", type = "button" }) => {
+const Button = ({
+  children,
+  onClick,
+  variant = "primary",
+  className = "",
+  type = "button",
+}) => {
   const variants = {
     primary: "bg-fuchsia-600 hover:bg-fuchsia-500 text-white",
-    ghost: "bg-transparent border border-slate-700 hover:border-fuchsia-500 text-slate-200",
+    ghost:
+      "bg-transparent border border-slate-700 hover:border-fuchsia-500 text-slate-200",
     subtle: "bg-slate-800 hover:bg-slate-700 text-slate-100",
   };
   return (
@@ -197,7 +382,8 @@ function NeonHeader({ role, setRole }) {
               HackSphere <span className="text-fuchsia-400">MVP</span>
             </h1>
             <p className="text-slate-300 mt-2 max-w-2xl">
-              Metaverse-inspired hackathon hub with swipe teaming, social feed submissions, timeline map, and Judge Copilot.
+              Metaverse-inspired hackathon hub with swipe teaming, social feed
+              submissions, timeline map, and Judge Copilot.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -249,7 +435,9 @@ function TimelineMap({ event, onToggle }) {
 }
 
 function Announcements({ eventId }) {
-  const [list, setList] = useState(() => store.get("announcements", []).filter((a) => a.eventId === eventId));
+  const [list, setList] = useState(() =>
+    store.get("announcements", []).filter((a) => a.eventId === eventId),
+  );
   const [msg, setMsg] = useState("");
 
   const post = () => {
@@ -265,12 +453,19 @@ function Announcements({ eventId }) {
   return (
     <div>
       <div className="flex gap-2 mb-3">
-        <Input value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Post announcement…" />
+        <Input
+          value={msg}
+          onChange={(e) => setMsg(e.target.value)}
+          placeholder="Post announcement…"
+        />
         <Button onClick={post}>Announce</Button>
       </div>
       <div className="space-y-2 max-h-60 overflow-auto pr-1">
         {list.map((a) => (
-          <div key={a.id} className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+          <div
+            key={a.id}
+            className="p-3 rounded-xl bg-slate-800/80 border border-slate-700"
+          >
             <div className="flex items-center justify-between">
               <span className="text-slate-200 text-sm">{a.msg}</span>
               <Badge>{new Date(a.at).toLocaleString()}</Badge>
@@ -302,10 +497,30 @@ function OrganizerDashboard({ activeEvent, setActiveEvent }) {
       sponsors: [],
       mode: form.mode,
       timeline: [
-        { id: uid(), label: "Register", due: new Date().toISOString().slice(0, 10), done: false },
-        { id: uid(), label: "Build", due: new Date().toISOString().slice(0, 10), done: false },
-        { id: uid(), label: "Submit", due: new Date().toISOString().slice(0, 10), done: false },
-        { id: uid(), label: "Demo Day", due: new Date().toISOString().slice(0, 10), done: false },
+        {
+          id: uid(),
+          label: "Register",
+          due: new Date().toISOString().slice(0, 10),
+          done: false,
+        },
+        {
+          id: uid(),
+          label: "Build",
+          due: new Date().toISOString().slice(0, 10),
+          done: false,
+        },
+        {
+          id: uid(),
+          label: "Submit",
+          due: new Date().toISOString().slice(0, 10),
+          done: false,
+        },
+        {
+          id: uid(),
+          label: "Demo Day",
+          due: new Date().toISOString().slice(0, 10),
+          done: false,
+        },
       ],
       createdAt: nowISO(),
       createdBy: "u1",
@@ -319,8 +534,13 @@ function OrganizerDashboard({ activeEvent, setActiveEvent }) {
   const onToggleTimeline = (id) => {
     const next = events.map((ev) =>
       ev.id === activeEvent
-        ? { ...ev, timeline: ev.timeline.map((m) => (m.id === id ? { ...m, done: !m.done } : m)) }
-        : ev
+        ? {
+            ...ev,
+            timeline: ev.timeline.map((m) =>
+              m.id === id ? { ...m, done: !m.done } : m,
+            ),
+          }
+        : ev,
     );
     setEvents(next);
   };
@@ -331,8 +551,16 @@ function OrganizerDashboard({ activeEvent, setActiveEvent }) {
     <div className="grid md:grid-cols-2 gap-6">
       <Section title="Create Event">
         <div className="grid gap-3">
-          <Input placeholder="Event title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <Input placeholder="Theme" value={form.theme} onChange={(e) => setForm({ ...form, theme: e.target.value })} />
+          <Input
+            placeholder="Event title"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+          />
+          <Input
+            placeholder="Theme"
+            value={form.theme}
+            onChange={(e) => setForm({ ...form, theme: e.target.value })}
+          />
           <div className="flex gap-3">
             <select
               value={form.mode}
@@ -367,7 +595,9 @@ function OrganizerDashboard({ activeEvent, setActiveEvent }) {
         {current && (
           <div className="space-y-4">
             <div>
-              <div className="mb-2 text-slate-300">Timeline Map (toggle to mark done)</div>
+              <div className="mb-2 text-slate-300">
+                Timeline Map (toggle to mark done)
+              </div>
               <TimelineMap event={current} onToggle={onToggleTimeline} />
             </div>
             <div>
@@ -376,7 +606,11 @@ function OrganizerDashboard({ activeEvent, setActiveEvent }) {
                 {current.tracks.map((t, i) => (
                   <Pill key={i}>{t}</Pill>
                 ))}
-                {current.tracks.length === 0 && <span className="text-slate-500">Add tracks in doc later → (MVP)</span>}
+                {current.tracks.length === 0 && (
+                  <span className="text-slate-500">
+                    Add tracks in doc later → (MVP)
+                  </span>
+                )}
               </div>
             </div>
             <Section title="Announcements">
@@ -404,7 +638,13 @@ function HackMatch({ currentUserId = "u1", onTeamCreated, eventId }) {
     setIdx(idx + 1);
     if (next.length >= 2) {
       // create team quickly
-      const team = { id: uid(), eventId, name: `Team-${uid()}`, members: [currentUserId, ...next.slice(0, 2)], createdAt: nowISO() };
+      const team = {
+        id: uid(),
+        eventId,
+        name: `Team-${uid()}`,
+        members: [currentUserId, ...next.slice(0, 2)],
+        createdAt: nowISO(),
+      };
       const all = store.get("teams", []);
       all.unshift(team);
       store.set("teams", all);
@@ -433,8 +673,12 @@ function HackMatch({ currentUserId = "u1", onTeamCreated, eventId }) {
             ))}
           </div>
           <div className="flex gap-3 justify-center">
-            <Button variant="ghost" onClick={skip} className="min-w-[120px]">Skip</Button>
-            <Button onClick={like} className="min-w-[120px]">Match</Button>
+            <Button variant="ghost" onClick={skip} className="min-w-[120px]">
+              Skip
+            </Button>
+            <Button onClick={like} className="min-w-[120px]">
+              Match
+            </Button>
           </div>
         </motion.div>
       ) : (
@@ -453,25 +697,60 @@ function SubmissionForm({ eventId }) {
 
   const submit = () => {
     if (!title.trim() || !desc.trim()) return;
-    const sub = { id: uid(), eventId, teamId: null, title, desc, github, video, track, tags: [], createdAt: nowISO(), scores: [] };
+    const sub = {
+      id: uid(),
+      eventId,
+      teamId: null,
+      title,
+      desc,
+      github,
+      video,
+      track,
+      tags: [],
+      createdAt: nowISO(),
+      scores: [],
+    };
     const all = store.get("submissions", []);
     all.unshift(sub);
     store.set("submissions", all);
-    setTitle(""); setDesc(""); setGithub(""); setVideo("");
+    setTitle("");
+    setDesc("");
+    setGithub("");
+    setVideo("");
     alert("Submission added to live feed ✨");
   };
 
   return (
     <div className="grid gap-2">
-      <Input placeholder="Project title" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <TextArea placeholder="Short description" value={desc} onChange={(e) => setDesc(e.target.value)} />
+      <Input
+        placeholder="Project title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <TextArea
+        placeholder="Short description"
+        value={desc}
+        onChange={(e) => setDesc(e.target.value)}
+      />
       <div className="grid md:grid-cols-2 gap-2">
-        <Input placeholder="GitHub URL (optional)" value={github} onChange={(e) => setGithub(e.target.value)} />
-        <Input placeholder="Demo video URL (optional)" value={video} onChange={(e) => setVideo(e.target.value)} />
+        <Input
+          placeholder="GitHub URL (optional)"
+          value={github}
+          onChange={(e) => setGithub(e.target.value)}
+        />
+        <Input
+          placeholder="Demo video URL (optional)"
+          value={video}
+          onChange={(e) => setVideo(e.target.value)}
+        />
       </div>
       <div className="flex items-center gap-2">
         <span className="text-slate-300 text-sm">Track</span>
-        <select value={track} onChange={(e) => setTrack(e.target.value)} className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100">
+        <select
+          value={track}
+          onChange={(e) => setTrack(e.target.value)}
+          className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100"
+        >
           <option>Core Platform</option>
           <option>AI Plagiarism</option>
           <option>Gamification</option>
@@ -483,11 +762,15 @@ function SubmissionForm({ eventId }) {
 }
 
 function LiveFeed({ eventId }) {
-  const [subs, setSubs] = useState(() => store.get("submissions", []).filter((s) => s.eventId === eventId));
+  const [subs, setSubs] = useState(() =>
+    store.get("submissions", []).filter((s) => s.eventId === eventId),
+  );
 
   useEffect(() => {
     const i = setInterval(() => {
-      setSubs(store.get("submissions", []).filter((s) => s.eventId === eventId));
+      setSubs(
+        store.get("submissions", []).filter((s) => s.eventId === eventId),
+      );
     }, 1000);
     return () => clearInterval(i);
   }, [eventId]);
@@ -495,32 +778,66 @@ function LiveFeed({ eventId }) {
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {subs.map((s) => (
-        <motion.div key={s.id} whileHover={{ y: -4 }} className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+        <motion.div
+          key={s.id}
+          whileHover={{ y: -4 }}
+          className="rounded-2xl border border-slate-800 bg-slate-900 p-4"
+        >
           <div className="flex items-center justify-between mb-2">
             <div className="text-white font-semibold">{s.title}</div>
             <Badge>{s.track}</Badge>
           </div>
-          <div className="text-slate-300 text-sm line-clamp-3 mb-3">{s.desc}</div>
-          <div className="flex flex-wrap gap-2 mb-3">
-            {s.github && <a className="text-fuchsia-300 text-sm underline" href={s.github} target="_blank" rel="noreferrer">GitHub</a>}
-            {s.video && <a className="text-fuchsia-300 text-sm underline" href={s.video} target="_blank" rel="noreferrer">Video</a>}
+          <div className="text-slate-300 text-sm line-clamp-3 mb-3">
+            {s.desc}
           </div>
-          <div className="text-[11px] text-slate-500">{new Date(s.createdAt).toLocaleString()}</div>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {s.github && (
+              <a
+                className="text-fuchsia-300 text-sm underline"
+                href={s.github}
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+            )}
+            {s.video && (
+              <a
+                className="text-fuchsia-300 text-sm underline"
+                href={s.video}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Video
+              </a>
+            )}
+          </div>
+          <div className="text-[11px] text-slate-500">
+            {new Date(s.createdAt).toLocaleString()}
+          </div>
         </motion.div>
       ))}
-      {subs.length === 0 && <div className="text-slate-400">No submissions yet. Be the first! 🚀</div>}
+      {subs.length === 0 && (
+        <div className="text-slate-400">
+          No submissions yet. Be the first! 🚀
+        </div>
+      )}
     </div>
   );
 }
 
 function JudgeDashboard({ eventId }) {
-  const [subs, setSubs] = useState(() => store.get("submissions", []).filter((s) => s.eventId === eventId));
+  const [subs, setSubs] = useState(() =>
+    store.get("submissions", []).filter((s) => s.eventId === eventId),
+  );
   const [round, setRound] = useState(1);
   const [myId] = useState("judge-01");
 
   useEffect(() => {
     const i = setInterval(() => {
-      setSubs(store.get("submissions", []).filter((s) => s.eventId === eventId));
+      setSubs(
+        store.get("submissions", []).filter((s) => s.eventId === eventId),
+      );
     }, 1000);
     return () => clearInterval(i);
   }, [eventId]);
@@ -530,8 +847,13 @@ function JudgeDashboard({ eventId }) {
     const idx = all.findIndex((x) => x.id === id);
     if (idx >= 0) {
       const s = all[idx];
-      const others = (s.scores || []).filter((r) => !(r.judgeId === myId && r.round === round));
-      s.scores = [...others, { judgeId: myId, round, score: Number(score), feedback, at: nowISO() }];
+      const others = (s.scores || []).filter(
+        (r) => !(r.judgeId === myId && r.round === round),
+      );
+      s.scores = [
+        ...others,
+        { judgeId: myId, round, score: Number(score), feedback, at: nowISO() },
+      ];
       all[idx] = s;
       store.set("submissions", all);
       setSubs(all.filter((x) => x.eventId === eventId));
@@ -543,7 +865,12 @@ function JudgeDashboard({ eventId }) {
       .map((s) => ({
         id: s.id,
         title: s.title,
-        avg: s.scores && s.scores.length ? Math.round(s.scores.reduce((a, b) => a + b.score, 0) / s.scores.length) : aiFirstImpression(s),
+        avg:
+          s.scores && s.scores.length
+            ? Math.round(
+                s.scores.reduce((a, b) => a + b.score, 0) / s.scores.length,
+              )
+            : aiFirstImpression(s),
       }))
       .sort((a, b) => b.avg - a.avg);
   }, [subs]);
@@ -553,44 +880,80 @@ function JudgeDashboard({ eventId }) {
       <Section title="Submissions">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-slate-300 text-sm">Round</span>
-          <select value={round} onChange={(e) => setRound(Number(e.target.value))} className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100">
+          <select
+            value={round}
+            onChange={(e) => setRound(Number(e.target.value))}
+            className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-100"
+          >
             <option value={1}>1</option>
             <option value={2}>2</option>
           </select>
         </div>
         <div className="space-y-4 max-h-[520px] overflow-auto pr-1">
           {subs.map((s) => (
-            <div key={s.id} className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+            <div
+              key={s.id}
+              className="p-4 rounded-2xl bg-slate-900 border border-slate-800"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="text-white font-semibold">{s.title}</div>
                   <div className="text-slate-300 text-sm mb-2">{s.desc}</div>
                   <div className="flex flex-wrap gap-2 mb-2">
-                    {s.github && <a className="text-fuchsia-300 text-sm underline" href={s.github} target="_blank" rel="noreferrer">GitHub</a>}
-                    {s.video && <a className="text-fuchsia-300 text-sm underline" href={s.video} target="_blank" rel="noreferrer">Video</a>}
+                    {s.github && (
+                      <a
+                        className="text-fuchsia-300 text-sm underline"
+                        href={s.github}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {s.video && (
+                      <a
+                        className="text-fuchsia-300 text-sm underline"
+                        href={s.video}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Video
+                      </a>
+                    )}
                     <Badge>AI First Look: {aiFirstImpression(s)} / 100</Badge>
                   </div>
                 </div>
               </div>
-              <JudgeScoring onSubmit={(score, feedback) => scoreSub(s.id, score, feedback)} />
+              <JudgeScoring
+                onSubmit={(score, feedback) => scoreSub(s.id, score, feedback)}
+              />
             </div>
           ))}
-          {subs.length === 0 && <div className="text-slate-400">Nothing to judge yet.</div>}
+          {subs.length === 0 && (
+            <div className="text-slate-400">Nothing to judge yet.</div>
+          )}
         </div>
       </Section>
 
       <Section title="Leaderboard (Live)">
         <div className="space-y-2">
           {leaderboard.map((l, i) => (
-            <div key={l.id} className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+            <div
+              key={l.id}
+              className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800"
+            >
               <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300">{i + 1}</div>
+                <div className="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300">
+                  {i + 1}
+                </div>
                 <div className="text-slate-100 font-medium">{l.title}</div>
               </div>
               <div className="text-fuchsia-300 font-semibold">{l.avg}</div>
             </div>
           ))}
-          {leaderboard.length === 0 && <div className="text-slate-400">No entries yet.</div>}
+          {leaderboard.length === 0 && (
+            <div className="text-slate-400">No entries yet.</div>
+          )}
         </div>
       </Section>
     </div>
@@ -604,22 +967,48 @@ function JudgeScoring({ onSubmit }) {
     <div className="mt-3 grid gap-2">
       <div className="flex items-center gap-2">
         <span className="text-slate-300 text-sm">Score</span>
-        <input type="range" min={0} max={100} value={score} onChange={(e) => setScore(Number(e.target.value))} />
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={score}
+          onChange={(e) => setScore(Number(e.target.value))}
+        />
         <Badge>{score}</Badge>
       </div>
-      <TextArea placeholder="Feedback (optional)" value={feedback} onChange={(e) => setFeedback(e.target.value)} />
+      <TextArea
+        placeholder="Feedback (optional)"
+        value={feedback}
+        onChange={(e) => setFeedback(e.target.value)}
+      />
       <div className="flex gap-2">
         <Button onClick={() => onSubmit(score, feedback)}>Save Score</Button>
-        <Button variant="ghost" onClick={() => { setScore(80); setFeedback(""); }}>Reset</Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setScore(80);
+            setFeedback("");
+          }}
+        >
+          Reset
+        </Button>
       </div>
     </div>
   );
 }
 
 function ParticipantDashboard({ activeEvent }) {
-  const [teams, setTeams] = useState(() => store.get("teams", []).filter((t) => t.eventId === activeEvent));
+  const [teams, setTeams] = useState(() =>
+    store.get("teams", []).filter((t) => t.eventId === activeEvent),
+  );
   useEffect(() => {
-    const i = setInterval(() => setTeams(store.get("teams", []).filter((t) => t.eventId === activeEvent)), 800);
+    const i = setInterval(
+      () =>
+        setTeams(
+          store.get("teams", []).filter((t) => t.eventId === activeEvent),
+        ),
+      800,
+    );
     return () => clearInterval(i);
   }, [activeEvent]);
 
@@ -634,12 +1023,19 @@ function ParticipantDashboard({ activeEvent }) {
       <Section title="Your Teams">
         <div className="space-y-2 max-h-64 overflow-auto pr-1">
           {teams.map((t) => (
-            <div key={t.id} className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+            <div
+              key={t.id}
+              className="p-3 rounded-xl bg-slate-900 border border-slate-800"
+            >
               <div className="text-slate-100 font-semibold">{t.name}</div>
-              <div className="text-slate-300 text-sm">Members: {t.members.join(", ")}</div>
+              <div className="text-slate-300 text-sm">
+                Members: {t.members.join(", ")}
+              </div>
             </div>
           ))}
-          {teams.length === 0 && <div className="text-slate-400">No team yet. Try HackMatch ➡️</div>}
+          {teams.length === 0 && (
+            <div className="text-slate-400">No team yet. Try HackMatch ➡️</div>
+          )}
         </div>
       </Section>
 
@@ -691,26 +1087,38 @@ export default function App() {
                 onChange={(e) => setActiveEvent(e.target.value)}
               >
                 {store.get("events", []).map((e) => (
-                  <option key={e.id} value={e.id}>{e.title}</option>
+                  <option key={e.id} value={e.id}>
+                    {e.title}
+                  </option>
                 ))}
               </select>
             </div>
           </div>
         </div>
       ) : (
-        <div className="mb-6 text-slate-400">No events yet. Switch to Organizer to create one.</div>
+        <div className="mb-6 text-slate-400">
+          No events yet. Switch to Organizer to create one.
+        </div>
       )}
 
       <div className="space-y-6">
         {role === "organizer" && (
-          <OrganizerDashboard activeEvent={activeEvent} setActiveEvent={setActiveEvent} />
+          <OrganizerDashboard
+            activeEvent={activeEvent}
+            setActiveEvent={setActiveEvent}
+          />
         )}
-        {role === "participant" && current && <ParticipantDashboard activeEvent={activeEvent} />}
-        {role === "judge" && current && <JudgeDashboard eventId={activeEvent} />}
+        {role === "participant" && current && (
+          <ParticipantDashboard activeEvent={activeEvent} />
+        )}
+        {role === "judge" && current && (
+          <JudgeDashboard eventId={activeEvent} />
+        )}
       </div>
 
       <footer className="mt-10 text-center text-slate-500 text-xs">
-        Built fast with ❤️ – HackSphere MVP. LocalStorage powered. (Swap to Azure SQL + MongoDB for production.)
+        Built fast with ❤️ – HackSphere MVP. LocalStorage powered. (Swap to
+        Azure SQL + MongoDB for production.)
       </footer>
     </div>
   );
